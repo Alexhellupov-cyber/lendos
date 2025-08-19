@@ -1,3 +1,18 @@
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  document.getElementById('contact-form').classList.add('hidden');
+  document.getElementById('thank-you').classList.remove('hidden');
+});
+
+
+function changeImage(el) {
+  const mainImage = document.getElementById("main-image");
+  mainImage.src = el.src;
+
+  // включаем лупу только при выборе миниатюры
+  enableZoom(mainImage);
+}
+
 function enableZoom(img) {
   document.querySelectorAll(".img-zoom-lens, .img-zoom-result").forEach(el => el.remove());
 
@@ -7,6 +22,7 @@ function enableZoom(img) {
   const result = document.createElement("div");
   result.classList.add("img-zoom-result");
 
+  img.parentElement.style.position = "relative"; // важно для mobile
   img.parentElement.appendChild(lens);
   img.parentElement.appendChild(result);
 
@@ -49,17 +65,19 @@ function enableZoom(img) {
     lens.style.left = x + "px";
     lens.style.top = y + "px";
 
-    // позиция результата в зависимости от ширины экрана
+    // позиция увеличенного окна
     if (window.innerWidth <= 768) {
-      // мобильная версия → слева сверху
-      result.style.left = rect.left + "px";
-      result.style.top = rect.top - result.offsetHeight - 10 + "px";
-      result.style.position = "fixed";
+      // для мобильной версии: фиксируем над картинкой
+      result.style.position = "absolute";
+      result.style.left = "0";
+      result.style.top = "-120px"; // сдвиг наверх (можно подрегулировать)
+      result.style.right = "auto";
+      result.style.transform = "none";
     } else {
-      // десктоп → справа снизу от курсора
+      // десктоп — рядом с курсором
+      result.style.position = "fixed";
       result.style.left = clientX + 20 + "px";
       result.style.top = clientY + 20 + "px";
-      result.style.position = "fixed";
     }
 
     result.style.backgroundPosition = `-${x * cx}px -${y * cy}px`;
