@@ -1,0 +1,317 @@
+:root {
+  --bg: #0b0b0d;
+  --card: #151518;
+  --text: #eaeaea;
+  --muted: #9a9a9a;
+  --red: #e10600;
+  --edge: #2a2a2f;
+}
+
+* {
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  color: var(--text);
+  background:
+    /* диагональные красные линии */
+    repeating-linear-gradient(-45deg, rgba(225,6,0,.25) 0 2px, transparent 2px 20px),
+    /* сетка (горизонт + вертикаль) */
+    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 80px),
+    /* красные пятна + фон */
+    radial-gradient(1200px 800px at 20% -10%, rgba(225,6,0,.28), transparent 60%),
+    radial-gradient(900px 600px at 100% 60%, rgba(225,6,0,.22), transparent 55%),
+    var(--bg);
+  line-height: 1.55;
+}
+
+.main-photo {
+  max-width: 1200px;
+  margin: 40px auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  position: relative; /* для текста поверх фото */
+}
+
+.main-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Текст поверх фото */
+.main-photo .photo-text {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.8);
+}
+
+.main-photo .photo-text h2 {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--red);
+}
+
+.main-photo .photo-text p {
+  margin: 5px 0 0;
+  font-size: 1.2rem;
+  color: var(--text);
+}
+
+/* Шапка */
+header {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+header h1 {
+  font-size: 3rem;
+  margin: 0;
+  color: var(--red);
+}
+header p {
+  font-size: 1.2rem;
+  color: var(--text);
+}
+
+/* Карточки секций */
+section {
+  max-width: 1000px;
+  margin: 40px auto;
+  background: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+h2 {
+  color: var(--red);
+}
+
+/* Характеристики */
+.features ul {
+  list-style: none;
+  padding: 0;
+}
+.features li {
+  margin: 8px 0;
+  border-bottom: 1px solid var(--edge);
+  padding-bottom: 4px;
+}
+
+/* Галерея */
+/* Главное фото */
+.gallery-main {
+  position: relative;
+  display: inline-block;
+  max-width: 900px;
+  margin: auto;
+}
+
+.gallery-main img {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: crosshair; /* курсор как лупа */
+}
+
+.gallery-main img:hover {
+  transform: scale(1.0); /* эффект увеличения */
+}
+
+/* Миниатюры */
+.gallery-thumbs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.gallery-thumbs img {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  border: 2px solid transparent;
+}
+
+.gallery-thumbs img:hover {
+  border-color: var(--red);
+  box-shadow: 0 0 10px rgba(225, 6, 0, 0.5);
+  transform: none; /* больше не увеличиваем */
+}
+
+
+/* Форма */
+.contact form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.contact input,
+.contact textarea {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--edge);
+  background: #0f0f11;
+  color: var(--text);
+}
+.contact button {
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  background: var(--red);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.contact button:hover {
+  background: #a10400;
+}
+.hidden {
+  display: none;
+}
+
+
+
+/* Лупа */
+.img-zoom-lens {
+  position: absolute;
+  border: 2px solid var(--red);
+  width: 120px;
+  height: 120px;
+  opacity: 0.4;
+  background: rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+}
+
+/* Увеличенное окно */
+.img-zoom-result {
+  position: absolute;
+  top: 0;
+  right: -320px;
+  width: 300px;
+  height: 300px;
+  border: 2px solid var(--edge);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+
+.img-zoom-lens img {
+  position: absolute;
+  transform: scale(2); /* во сколько раз увеличить */
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: var(--card);
+  color: var(--muted);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--edge);
+}
+/* ============= Адаптивность ============= */
+
+/* Планшеты (до 992px) */
+@media (max-width: 992px) {
+  body {
+    font-size: 15px;
+  }
+
+  .main-photo {
+    margin: 20px;
+  }
+
+  .gallery-main {
+    max-width: 100%;
+  }
+
+  .gallery-thumbs img {
+    width: 90px;
+    height: 60px;
+  }
+
+  section {
+    margin: 20px auto;
+    padding: 15px;
+  }
+}
+
+/* Смартфоны (до 768px) */
+@media (max-width: 768px) {
+  .img-zoom-lens {
+    width: 80px;
+    height: 80px;
+  }
+
+  .img-zoom-result {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .img-zoom-lens {
+    width: 60px;
+    height: 60px;
+  }
+
+  .img-zoom-result {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+
+/* Очень маленькие экраны (до 480px) */
+@media (max-width: 480px) {
+  body {
+    font-size: 13px;
+  }
+
+  .main-photo {
+    margin: 10px;
+  }
+
+  .main-photo .photo-text h2 {
+    font-size: 1.2rem;
+  }
+
+  .main-photo .photo-text p {
+    font-size: 0.9rem;
+  }
+
+  .gallery-thumbs img {
+    width: 60px;
+    height: 45px;
+  }
+
+  section {
+    margin: 10px auto;
+    padding: 12px;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+}

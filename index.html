@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mercedes-Benz CLS 2002</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<section class="main-photo">
+  <img src="./img/main.jpg" alt="Mercedes-Benz CLS 2002">
+  <div class="photo-text">
+    <h2>Mercedes-Benz CLS</h2>
+    <p>2002 год выпуска — стиль и мощь</p>
+  </div>
+</section>
+
+
+  <section class="description">
+    <h2>Описание</h2>
+    <p id="description-text">
+      Продается Mercedes-Benz CLS 2002 года. Автомобиль в отличном состоянии, ухоженный салон, надежный двигатель. Отлично подойдет для ценителей качества и комфорта.
+    </p>
+  </section>
+
+  <section class="features">
+    <h2>Характеристики</h2>
+    <ul id="features-list">
+      <li>Двигатель: 3.0 бензин</li>
+      <li>КПП: Автомат</li>
+      <li>Пробег: 180 000 км</li>
+      <li>Привод: Задний</li>
+      <li>Цвет: Черный металлик</li>
+    </ul>
+  </section>
+
+ <section class="gallery">
+  <h2>Фотогалерея</h2>
+  <p>есть инструмент чтобы лучше расмотреть фотографию</p>
+
+  <!-- Главное фото -->
+  <div class="gallery-main">
+    <img id="main-image" src="./img/1200px-Mercedes-Benz_C219_front_20080620.jpg" alt="Главное фото">
+  </div>
+
+  <!-- Миниатюры -->
+  <div class="gallery-thumbs">
+    <img src="./img/1200px-Mercedes-Benz_C219_front_20080620.jpg" alt="Фото 1" onclick="changeImage(this)">
+    <img src="./img/2.webp" alt="Фото 2" onclick="changeImage(this)">
+    <img src="./img/3.webp" alt="Фото 3" onclick="changeImage(this)">
+    <img src="./img/4.webp" alt="Фото 4" onclick="changeImage(this)">
+    <img src="./img/5.webp" alt="Фото 5" onclick="changeImage(this)">
+  </div>
+</section>
+
+
+  <section class="contact">
+    <h2>Связаться с продавцом</h2>
+    <form id="contact-form">
+      <input type="text" placeholder="Ваше имя" required>
+      <input type="tel" placeholder="Телефон" required>
+      <textarea placeholder="Ваше сообщение"></textarea>
+      <button type="submit">Отправить</button>
+    </form>
+    <div id="thank-you" class="hidden">Спасибо! Ваше сообщение отправлено.</div>
+  </section>
+  <footer>
+    <p>&copy; 2023 Mercedes-Benz CLS. Все права защищены.</p>
+    <p>Разработано с ❤️ Alexhellupov</p>
+  </footer>
+  <script src="scripts.js"></script>
+  <script src="./zaiavki.js"></script>
+</body>
+</html>
