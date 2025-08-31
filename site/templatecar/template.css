@@ -1,0 +1,280 @@
+:root {
+  --bg: #000000;
+  --card: #101F2D;
+  --text: #ffffff;
+  --muted: #cccccc;
+  --accent: #38393b;
+  --edge: #2a2a2f;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  color: var(--text);
+  background: #516981;
+  line-height: 1.55;
+}
+
+/* ================== Navbar ================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(16, 31, 45, 0.85);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  border-bottom: 1px solid rgba(245,235,221,0.2);
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar.shrink { padding: 8px 40px; }
+
+.navbar .logo {
+  position: absolute;
+  left: 40px;
+  height: 80px;
+  transition: height 0.3s ease-in-out;
+}
+
+.navbar.shrink .logo { height: 50px; }
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-links a {
+  display: inline-block;
+  padding: 8px 18px;
+  background: rgba(245, 235, 221, 0.2);
+  color: #F5EBDD;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  background: rgba(245, 235, 221, 0.5);
+  color: #101F2D;
+  transform: translateY(-2px);
+}
+
+/* ================== Главная фотография ================== */
+.main-photo {
+  max-width: 1200px;
+  margin: 170px auto 40px auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  position: relative;
+}
+
+.main-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.main-photo .photo-text {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: var(--text);
+  background: rgba(0,0,0,0.6);
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.main-photo .photo-text h2 {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--accent);
+}
+
+.main-photo .photo-text p {
+  margin: 5px 0 0;
+  font-size: 1.2rem;
+}
+
+/* ================== Секции ================== */
+section {
+  max-width: 1000px;
+  margin: 40px auto;
+  background: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+h2 { color: var(--text); }
+
+.features ul {
+  list-style: none;
+  padding: 0;
+}
+
+.features li {
+  margin: 8px 0;
+  border-bottom: 1px solid var(--edge);
+  padding-bottom: 4px;
+}
+
+/* ================== Галерея ================== */
+
+/* Контейнер основной фотографии галереи */
+.gallery-main {
+  width: 100%;
+  max-width: 1200px;     /* ширина контейнера */
+  height: 500px;         /* фиксированная высота */
+  margin: 0 auto 20px auto;
+  border-radius: 12px;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Фото в контейнере */
+.gallery-main img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+  object-fit: contain;   /* сохраняет пропорции */
+  position: relative;
+  margin: auto;
+}
+
+
+
+
+/* Миниатюры */
+.gallery-thumb {
+  display: flex;
+  flex-direction: column; /* столбиком */
+  align-items: center;    /* по центру */
+  gap: 15px;              /* расстояние между картинками */
+  padding: 10px;
+}
+
+
+
+
+
+.gallery-thumb img {
+  width: 100%;       /* занимает всю ширину контейнера */
+  max-width: 1000px;  /* ограничение, чтобы не были слишком огромные */
+  height: auto;      /* автоматическая высота */
+  object-fit: contain;
+}
+
+.gallery-thumbs img:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(16,31,45,0.6);
+  width: 1200px;
+}
+
+
+/* ================== Форма ================== */
+.contact form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact input,
+.contact textarea {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--edge);
+  background: #000;
+  color: var(--text);
+}
+
+.contact button {
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.contact button:hover { background: #0b1622; }
+.hidden { display: none; }
+
+/* ================== Футер ================== */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--accent);
+}
+
+/* ================== Адаптивность ================== */
+
+/* Планшеты и телефоны (до 992px) — navbar снизу, кнопки по центру */
+@media (max-width: 992px) {
+  body { font-size: 15px; }
+
+  .main-photo { margin: 20px; }
+  .gallery-main { max-width: 100%; }
+  .gallery-thumbs img { width: 90px; height: 60px; }
+  section { margin: 20px auto; padding: 15px; }
+
+  .navbar {
+    top: auto;
+    bottom: 0;
+    padding: 10px 0;
+    justify-content: center;
+    border-top: 1px solid rgba(245,235,221,0.2);
+    border-bottom: none;
+  }
+
+  .navbar .logo { display: none; }
+  .nav-links { gap: 10px; }
+  .nav-links a {
+    flex: none;
+    font-size: 1rem;
+    padding: 12px 10px;
+    text-align: center;
+  }
+}
+
+/* Смартфоны до 768px */
+@media (max-width: 768px) {
+  .img-zoom-lens { width: 80px; height: 80px; }
+  .img-zoom-result { width: 200px; height: 200px; }
+  .nav-links a { font-size: 0.95rem; padding: 10px 8px; }
+}
+
+/* Очень маленькие экраны до 480px */
+@media (max-width: 480px) {
+  body { font-size: 13px; }
+  .main-photo { margin: 10px; }
+  .main-photo .photo-text h2 { font-size: 1.2rem; }
+  .main-photo .photo-text p { font-size: 0.9rem; }
+  .gallery-thumbs img { width: 60px; height: 45px; }
+  section { margin: 10px auto; padding: 12px; }
+  h2 { font-size: 1.3rem; }
+  .nav-links a { font-size: 0.9rem; padding: 8px 6px; }
+}

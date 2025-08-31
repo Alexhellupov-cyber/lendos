@@ -1,0 +1,220 @@
+:root {
+  --bg: #000000;
+  --card: #101F2D;
+  --text: #ffffff;
+  --muted: #cccccc;
+  --accent: #101F2D;
+  --edge: #2a2a2f;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  color: var(--text);
+  background: #516981;
+  line-height: 1.55;
+  background-image: url('./mainimg/R.jfif');
+    background-repeat: no-repeat;   /* чтобы картинка не повторялась */
+  background-size: cover;         /* растянуть по всей ширине/высоте */
+  background-position: center;    /* выровнять по центру */
+  background-attachment: fixed;
+}
+
+.main-photo {
+  max-width: 1200px;
+  margin: 170px auto 40px auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  position: relative;
+}
+
+.main-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.main-photo .photo-text {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: var(--text);
+  background: rgba(0,0,0,0.6);
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.main-photo .photo-text h2 {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--text);
+}
+
+.main-photo .photo-text p {
+  margin: 5px 0 0;
+  font-size: 1.2rem;
+}
+/* ================== Navbar ================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(16, 31, 45, 0.85);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  border-bottom: 1px solid rgba(245,235,221,0.2);
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar.shrink { padding: 8px 40px; }
+
+.navbar .logo {
+  position: absolute;
+  left: 40px;
+  height: 80px;
+  transition: height 0.3s ease-in-out;
+}
+
+.navbar.shrink .logo { height: 50px; }
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-links a {
+  display: inline-block;
+  padding: 8px 18px;
+  background: rgba(245, 235, 221, 0.2);
+  color: #F5EBDD;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  background: rgba(245, 235, 221, 0.5);
+  color: #101F2D;
+  transform: translateY(-2px);
+}
+
+
+/* ================== Форма ================== */
+.contact form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact input,
+.contact textarea {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--edge);
+  background: #000;
+  color: var(--text);
+}
+
+.contact button {
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.contact button:hover { background: #0b1622; }
+.hidden { display: none; }
+
+/* ================== Футер ================== */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--accent);
+}
+
+section {
+  max-width: 1000px;
+  margin: 40px auto;
+  background: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+h2 { color: var(--text); }
+
+.features ul {
+  list-style: none;
+  padding: 0;
+}
+
+.features li {
+  margin: 8px 0;
+  border-bottom: 1px solid var(--edge);
+  padding-bottom: 4px;
+}
+
+.about p {
+  margin: 10px 0;
+  color: var(--text);
+}
+
+
+
+/* ================== Адаптивность ================== */
+
+/* Планшеты и ноутбуки (до 1200px) */
+@media (max-width: 1200px) {
+  .main-photo { max-width: 95%; margin: 150px auto 30px auto; }
+  section { max-width: 95%; margin: 30px auto; padding: 18px; }
+}
+
+/* Планшеты и маленькие ноутбуки (до 992px) */
+@media (max-width: 992px) {
+  .main-photo { margin: 120px auto 30px auto; }
+  .navbar { padding: 15px 30px; }
+  .nav-links a { padding: 6px 14px; font-size: 0.9rem; }
+  section { padding: 16px; }
+}
+
+/* Смартфоны до 768px */
+@media (max-width: 768px) {
+  body { line-height: 1.5; }
+  .main-photo { margin: 100px auto 20px auto; }
+  .main-photo .photo-text h2 { font-size: 1.5rem; }
+  .main-photo .photo-text p { font-size: 1rem; }
+  .navbar { padding: 10px 20px; }
+  .nav-links { gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .nav-links a { font-size: 0.85rem; padding: 5px 10px; }
+  section { margin: 20px auto; padding: 14px; }
+}
+
+/* Очень маленькие экраны до 480px */
+@media (max-width: 480px) {
+  .main-photo { margin: 80px auto 15px auto; }
+  .main-photo .photo-text h2 { font-size: 1.2rem; }
+  .main-photo .photo-text p { font-size: 0.9rem; }
+  .navbar { padding: 8px 15px; }
+  .nav-links a { font-size: 0.8rem; padding: 4px 8px; }
+  section { margin: 15px auto; padding: 12px; }
+}
