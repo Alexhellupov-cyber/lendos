@@ -1,14 +1,86 @@
 [
     {
         "post_id": 1,
-        "timestamp": "2025-08-30T03:24:38.589693",
+        "timestamp": "2025-09-01T22:47:51.685118",
         "media": [
             "img1-1.jpg",
             "img1-2.jpg",
-            "img1-3.jpg"
+            "img1-3.jpg",
+            "img1-4.jpg",
+            "img1-5.jpg",
+            "img1-6.jpg",
+            "img1-7.jpg",
+            "img1-8.jpg",
+            "img1-9.jpg"
         ],
-        "title": "DREAM",
-        "caption": "123",
-        "characteristics": "jeep grand cherokee 5.2л lifted +22disck\n\nMercedes AMG CLS 4.7л"
+        "title": "test 1",
+        "price": "9999",
+        "year": "2002",
+        "mileage": "100000",
+        "caption": "test 1",
+        "characteristics": "test 1"
+    },
+    {
+        "post_id": 2,
+        "timestamp": "2025-09-01T22:48:30.975357",
+        "media": [
+            "img2-1.jpg",
+            "img2-2.jpg",
+            "img2-3.jpg",
+            "img2-4.jpg",
+            "img2-5.jpg",
+            "img2-6.jpg",
+            "img2-7.jpg",
+            "img2-8.jpg",
+            "img2-9.jpg"
+        ],
+        "title": "test 2",
+        "price": "50000",
+        "year": "2015",
+        "mileage": "150000",
+        "caption": "test 2",
+        "characteristics": "test 2"
+    },
+    {
+        "post_id": 3,
+        "timestamp": "2025-09-01T22:49:09.721362",
+        "media": [
+            "img3-1.jpg",
+            "img3-2.jpg",
+            "img3-3.jpg",
+            "img3-4.jpg",
+            "img3-5.jpg",
+            "img3-6.jpg",
+            "img3-7.jpg",
+            "img3-8.jpg",
+            "img3-9.jpg"
+        ],
+        "title": "test 3",
+        "price": "165000",
+        "year": "2020",
+        "mileage": "150000",
+        "caption": "test 3",
+        "characteristics": "test 3"
+    },
+    {
+        "post_id": 4,
+        "timestamp": "2025-09-01T22:49:37.346047",
+        "media": [
+            "img4-1.jpg",
+            "img4-2.jpg",
+            "img4-3.jpg",
+            "img4-4.jpg",
+            "img4-5.jpg",
+            "img4-6.jpg",
+            "img4-7.jpg",
+            "img4-8.jpg",
+            "img4-9.jpg"
+        ],
+        "title": "test 4",
+        "price": "200000",
+        "year": "2025",
+        "mileage": "200000",
+        "caption": "test 4",
+        "characteristics": "test 4"
     }
 ]

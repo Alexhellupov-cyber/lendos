@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{{title}}</title>
   <link rel="stylesheet" href="../templatecar/template.css" />
+  <link rel="icon" href="../main/mainimg/logo.svg" type="image/x-icon">
 </head>
 <body>
         <nav class="navbar" id="navbar">
@@ -19,25 +20,37 @@
 </nav>
 
 
-<section class="main-photo">
-  <img id="main-photo" src="{{main_photo}}" alt="main">
-  <h2 class="photo-text">{{title}}</h2>
-</section>
-<section class="features">Характеристика {{features}}</section>
-<section class="description">Опис {{description}}</section>
-<section class="gallery-thumb">{{gallery}}</section>
+<div class="car-page-container">
+  <div class="car-main">
+    <section class="main-photo">
+      <img id="main-photo" src="{{main_photo}}" alt="main">
+      <h2 class="photo-text">{{title}} <br>Ціна: {{price}} </h2>
+    </section>
 
+    <section class="features">Характеристика <br>📅Рік випуску: {{year}}<br>🚗 Пробіг: {{mileage}} км <br>{{features}}</section>
+    <section class="description">Опис {{description}}</section>
+    <section class="gallery-thumb">Фотографії авто {{gallery}}</section>
 
-  <section class="contact">
-    <h2>Связаться с продавцом</h2>
-    <form id="contact-form">
-      <input type="text" placeholder="Ваше имя" required>
-      <input type="tel" placeholder="Телефон" required>
-      <textarea placeholder="Ваше сообщение"></textarea>
-      <button type="submit">Отправить</button>
-    </form>
-    <div id="thank-you" class="hidden">Спасибо! Ваше сообщение отправлено.</div>
-  </section>
+    <section class="contact">
+      <h2>Связаться с продавцом</h2>
+      <form id="contact-form">
+        <input type="text" placeholder="Ваше имя" required>
+        <input type="tel" placeholder="Телефон" required>
+        <textarea placeholder="Ваше сообщение"></textarea>
+        <button type="submit">Отправить</button>
+      </form>
+      <div id="thank-you" class="hidden">Спасибо! Ваше сообщение отправлено.</div>
+    </section>
+  </div>
+
+  <aside class="car-sidebar">
+    <h3>Інші пропозиції</h3>
+    <div class="other-cars">
+      {{other_cars}}
+    </div>
+  </aside>
+</div>
+
   <footer>
     <p>&copy;Все права защищены.</p>
     <p>Разработано с ❤️ Alexhellupov</p>

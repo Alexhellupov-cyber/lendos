@@ -95,23 +95,99 @@ body {
   background: rgba(0,0,0,0.6);
   padding: 10px 20px;
   border-radius: 8px;
+  margin-bottom: 50px;
 }
 
 .main-photo .photo-text h2 {
   margin: 0;
   font-size: 2rem;
   color: var(--accent);
+    position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: var(--text);
+  background: rgba(0,0,0,0.6);
+  padding: 10px 20px;
+  border-radius: 8px;
 }
+
+
 
 .main-photo .photo-text p {
   margin: 5px 0 0;
   font-size: 1.2rem;
 }
 
+.car-page-container {
+
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* основной контент + боковая колонка */
+  gap: 30px;
+  margin: 20px;
+  align-items: start; /* 👈 выравниваем блоки по верху */
+}
+
+.car-main {
+  margin-left: 40px;
+}
+
+.car-sidebar {
+  max-width: 600px;
+  background: transparent;  /* 👈 aside прозрачный */
+  padding: 0;               /* можно убрать внутренние отступы */
+  border-radius: 0;         /* убираем скругления */
+  box-shadow: none;         /* убираем тень */
+}
+
+.car-sidebar h3 {
+  background-color: var(--muted);
+  padding-top: 140px;
+  margin: 10px;
+  margin-bottom: 15px;
+  color: var(--card);
+  text-align: center;
+}
+
+.other-cars {
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-grow: 1; /* 👈 позволит блоку занять всю высоту, если контента мало */
+}
+
+.other-cars a {
+  display: block;
+  margin-bottom: 15px;
+  text-decoration: none;
+  color: var(--text);
+  background: #0f1e2c;       /* 👈 фон у карточек */
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3); /* 👈 лёгкая тень у карточек */
+}
+
+.other-cars img {
+  width: 100%;         /* растянуть по ширине блока */
+  max-width: 1000px;   /* но не больше 1000px */
+  height: auto;        /* сохраняем пропорции */
+  display: block;
+  margin: 0 auto;      /* центрируем */
+}
+
+
+.other-cars p {
+  padding: 5px 10px;
+  margin: 0;
+}
+
+
+
+
 /* ================== Секции ================== */
 section {
   max-width: 1000px;
-  margin: 40px auto;
+  margin: 20px auto;
   background: var(--card);
   padding: 20px;
   border-radius: 12px;

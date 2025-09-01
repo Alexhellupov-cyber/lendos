@@ -1,53 +1,180 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Каталог авто</title>
-    <link rel="stylesheet" href="./katalog.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог авто</title>
+  
+  <!-- Стили сайта -->
+  <link rel="stylesheet" href="./katalog.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="../main/mainimg/logo.svg" type="image/x-icon">
+  
+  <!-- noUiSlider CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css" rel="stylesheet">
 </head>
 <body>
-        <nav class="navbar" id="navbar">
-  <img src="../main/mainimg/logo.svg" alt="logo" class="logo">
-  <div class="nav-links" id="menu">
-    <a href="../main/main.html">Головна</a>
-    <a href="../katalogtemp/katalog.html">Каталог</a>
-    <a href="../posluga/posluga.html">Послуги</a>
-    <a href="#">Контакти</a>
-
-  </div>
-</nav>
-
-<main class="catalog">
-  <h1>Каталог авто</h1>
-  <div class="catalog-grid">
-  
-
-    <!-- таких карточек можно сделать до 25 (5x5) -->
-
-    
-    
-    <a href="../carsfolder/dream.html" class="card">
-        <img src="../images/img1-1.jpg" alt="DREAM">
-        <h2>DREAM</h2>
-        <p>123</p>
-    </a>
-    
+  <!-- Навигация -->
+  <nav class="navbar" id="navbar">
+    <img src="../main/mainimg/logo.svg" alt="logo" class="logo">
+    <div class="nav-links" id="menu">
+      <a href="../main/main.html">Головна</a>
+      <a href="../katalogtemp/katalog.html">Каталог</a>
+      <a href="../posluga/posluga.html">Послуги</a>
+      <a href="#">Контакти</a>
     </div>
+  </nav>
 
-  <!-- Пагинация -->
-  <div class="pagination">
-    <a href="#" class="active">1</a>
-    <a href="#">2</a>
-    <a href="#">3</a>
+  <div class="catalog-container">
+
+    <!-- Боковой фильтр для ПК -->
+    <aside class="filters">
+      <div class="fltr">
+        <h2>Фільтр</h2>
+        <div class="filter-group">
+          <label>Ціна ($)</label>
+          <div class="range-inputs">
+            <input type="number" id="minPriceInput" value="2790">
+            <span>-</span>
+            <input type="number" id="maxPriceInput" value="109990">
+          </div>
+          <div id="priceSlider"></div>
+        </div>
+
+        <div class="filter-group">
+          <label>Рік випуску</label>
+          <div class="range-inputs">
+            <input type="number" id="minYearInput" value="1990">
+            <span>-</span>
+            <input type="number" id="maxYearInput" value="2025">
+          </div>
+          <div id="yearSlider"></div>
+        </div>
+
+        <div class="filter-group">
+          <label>Пробіг (км)</label>
+          <div class="range-inputs">
+            <input type="number" id="minMileageInput" value="0">
+            <span>-</span>
+            <input type="number" id="maxMileageInput" value="300000">
+          </div>
+          <div id="mileageSlider"></div>
+        </div>
+
+        <button onclick="applyFilter()">Застосувати</button>
+        <button onclick="resetFilter()">Скинути фільтр</button>
+      </div>
+    </aside>
+
+    <!-- Основной каталог и мобильный фильтр -->
+    <main class="catalog">
+      <h1>
+        Каталог авто
+        <button class="filter-toggle" onclick="toggleFilter()">Фільтр</button>
+      </h1>
+
+      <!-- Мобильный горизонтальный фильтр -->
+      <div class="filters-mobile" id="mobileFilters">
+        <div class="fltr">
+          <div class="filter-group">
+            <label>Ціна ($)</label>
+            <div class="range-inputs">
+              <input type="number" id="minPriceMobile" value="2790">
+              <span>-</span>
+              <input type="number" id="maxPriceMobile" value="109990">
+            </div>
+            <div id="priceSliderMobile"></div>
+          </div>
+
+          <div class="filter-group">
+            <label>Рік випуску</label>
+            <div class="range-inputs">
+              <input type="number" id="minYearMobile" value="1990">
+              <span>-</span>
+              <input type="number" id="maxYearMobile" value="2025">
+            </div>
+            <div id="yearSliderMobile"></div>
+          </div>
+
+          <div class="filter-group">
+            <label>Пробіг (км)</label>
+            <div class="range-inputs">
+              <input type="number" id="minMileageMobile" value="0">
+              <span>-</span>
+              <input type="number" id="maxMileageMobile" value="300000">
+            </div>
+            <div id="mileageSliderMobile"></div>
+          </div>
+        </div>
+
+        <button onclick="applyFilter()">Застосувати</button>
+        <button onclick="resetFilter()">Скинути фільтр</button>
+      </div>
+
+      <!-- Сетка каталога -->
+      <div class="catalog-grid">
+        <a href="../carsfolder/test1.html" class="card">
+          <img src="../images/img1-1.jpg" alt="test 1">
+          <h2>test 1</h2>
+          <div class="card-info">
+            <p class="price">💰 9 999$</p>
+            <p>📅 2002</p>
+            <p>🚗 100000 км</p>
+          </div>
+        </a>
+
+        <a href="../carsfolder/test2.html" class="card">
+          <img src="../images/img2-1.jpg" alt="test 2">
+          <h2>test 2</h2>
+          <div class="card-info">
+            <p class="price">💰 50 000$</p>
+            <p>📅 2015</p>
+            <p>🚗 150000 км</p>
+          </div>
+        </a>
+
+        <a href="../carsfolder/test3.html" class="card">
+          <img src="../images/img3-1.jpg" alt="test 3">
+          <h2>test 3</h2>
+          <div class="card-info">
+            <p class="price">💰 165 000$</p>
+            <p>📅 2020</p>
+            <p>🚗 150000 км</p>
+          </div>
+        </a>
+
+        <a href="../carsfolder/test4.html" class="card">
+          <img src="../images/img4-1.jpg" alt="test 4">
+          <h2>test 4</h2>
+          <div class="card-info">
+            <p class="price">💰 200 000$</p>
+            <p>📅 2025</p>
+            <p>🚗 200000 км</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Пагинация -->
+      <div class="pagination">
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+      </div>
+    </main>
   </div>
-</main>
-<footer>
+
+  <!-- Footer -->
+  <footer>
     <p>&copy; 2023 Prezident Cars. Все права защищены.</p>
     <p>Разработано с ❤️ Alexhellupov</p>
   </footer>
+
+  <!-- Скрипты -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.js"></script>
   <script src="/site/scripts/navbar.js"></script>
   <script src="/site/scripts/scripts.js"></script>
-  <script src="/site/scripts/zaiavki.js"></script>    
+  <script src="/site/scripts/zaiavki.js"></script>
+  <script src="/site/scripts/filter.js"></script>
 </body>
 </html>

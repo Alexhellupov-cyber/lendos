@@ -51,7 +51,8 @@ import shutil
 SITE_IMAGES_DIR = os.path.join("..", "site", "katalog", "images")
 os.makedirs(SITE_IMAGES_DIR, exist_ok=True)
 
-def save_post(media, title, caption, characteristics):
+def save_post(media, title, caption, characteristics, price, year, mileage):
+
     posts = load_posts()
     post_id = (max([p.get("post_id", 0) for p in posts], default=0) + 1)
 
@@ -77,9 +78,13 @@ def save_post(media, title, caption, characteristics):
         "timestamp": datetime.now().isoformat(),
         "media": renamed_media,
         "title": title,
+        "price": price,
+        "year": year,           # <-- сохраняем
+        "mileage": mileage,     # <-- сохраняем
         "caption": caption,
         "characteristics": characteristics
     }
+
 
     posts.append(post)
     save_posts(posts)
@@ -128,7 +133,15 @@ def postall(message):
     if message.chat.id not in ADMINS:
         return bot.send_message(message.chat.id, "⛔ у вас немає прав виконати данну команду.")
     waiting_for_post[message.chat.id] = "photos"
-    pending_post[message.chat.id] = {"photos": [], "title": "", "caption": "", "characteristics": ""}
+    pending_post[message.chat.id] = {
+        "photos": [],
+        "title": "",
+        "price": "",
+        "year": "",          # <-- новое поле
+        "mileage": "",       # <-- новое поле
+        "caption": "",
+        "characteristics": ""
+    }
     bot.send_message(message.chat.id, "✍️ Відправте фото для машини (можна декілька). Після першого фото я попрошу заголовок.")
 
 # --- POST ALL (текст) ---
@@ -214,16 +227,38 @@ def handle_post(message):
     # === 2) Заголовок ===
     if step == "title" and message.content_type == 'text':
         post["title"] = message.text.strip()
-        waiting_for_post[chat_id] = "characteristics"
-        bot.send_message(chat_id, "✍️ Тепер введіть ХАРАКТЕРИСТИКИ (вільним текстом або списком)")
+        waiting_for_post[chat_id] = "price"
+        bot.send_message(chat_id, "💰 Введіть ЦІНУ машини (наприклад: 25000$)")
         return
 
-    # === 3) Характеристики ===
+    # === 3) Цена ===
+    if step == "price" and message.content_type == 'text':
+        post["price"] = message.text.strip()
+        waiting_for_post[chat_id] = "year"
+        bot.send_message(chat_id, "📅 Введіть РІК ВИПУСКУ авто (наприклад: 2018)")
+        return
+
+    # === 3.1) Год выпуска ===
+    if step == "year" and message.content_type == 'text':
+        post["year"] = message.text.strip()
+        waiting_for_post[chat_id] = "mileage"
+        bot.send_message(chat_id, "🚗 Введіть ПРОБІГ авто (в км, наприклад: 125000)")
+        return
+
+    # === 3.2) Пробег ===
+    if step == "mileage" and message.content_type == 'text':
+        post["mileage"] = message.text.strip()
+        waiting_for_post[chat_id] = "characteristics"
+        bot.send_message(chat_id, "✍️ Тепер введіть Характеристику авто (вільним текстом або списком)")
+        return
+
+    # === 4) Характеристики ===
     if step == "characteristics" and message.content_type == 'text':
         post["characteristics"] = message.text.strip()
         waiting_for_post[chat_id] = "caption"
         bot.send_message(chat_id, "✍️ Тепер введіть ОПИС (стан, історія, додатково)")
         return
+
 
     # === 4) Опис ===
     if step == "caption" and message.content_type == 'text':
@@ -233,6 +268,9 @@ def handle_post(message):
         # подтверждение
         preview_text = (
             f"<b>🏷 {post['title'] or 'Без назви'}</b>\n\n"
+            f"💰 Ціна: {post['price'] or '—'}\n"
+            f"📅 Рік випуску: {post['year'] or '—'}\n"
+            f"🚗 Пробіг: {post['mileage'] or '—'} км\n\n"
             f"📋 Характеристики:\n{post['characteristics'] or '—'}\n\n"
             f"📝 {post['caption'] or '—'}"
         )
@@ -275,7 +313,15 @@ def callback_post(call):
         post = pending_post.pop(chat_id)
 
     # сохраняем в JSON и получаем пост
-        saved_post = save_post(post["photos"], post["title"], post["caption"], post["characteristics"])
+        saved_post = save_post(
+            post["photos"],
+            post["title"],
+            post["caption"],
+            post["characteristics"],
+            post["price"],
+            post["year"],
+            post["mileage"]
+        )
 
     # генерируем HTML страницу
         generate_car_page(saved_post)
@@ -285,10 +331,14 @@ def callback_post(call):
 
         media = [InputMediaPhoto(file_id) for file_id in post["photos"]]
         text_full = (
-        f"<b>🏷 {post['title'] or 'Без назви'}</b>\n\n"
-        f"📋 Характеристики:\n{post['characteristics'] or '—'}\n\n"
-        f"📝 {post['caption'] or '—'}"
+            f"<b>🏷 {post['title'] or 'Без назви'}</b>\n\n"
+            f"💰 Ціна: {post['price'] or '—'}\n"
+            f"📅 Рік випуску: {post['year'] or '—'}\n"
+            f"🚗 Пробіг: {post['mileage'] or '—'} км\n\n"
+            f"📋 Характеристики:\n{post['characteristics'] or '—'}\n\n"
+            f"📝 {post['caption'] or '—'}"
         )
+
 
 
         success = 0
@@ -300,7 +350,7 @@ def callback_post(call):
                 bot.send_message(
                     user_id,
                     text_full,
-                    reply_markup=create_user_buttons(post.get('post_id'), admin=(user_id in ADMINS))
+                    reply_markup=create_user_buttons(saved_post["post_id"], admin=(user_id in ADMINS))
                 )
                 success += 1
             except:
@@ -367,11 +417,12 @@ def send_recent_posts(message):
                 media_entities = build_media_entities(media_list)
                 if media_entities:
                     bot.send_media_group(user_id, media_entities)
-            bot.send_message(
-                user_id,
-                text_full,
-                reply_markup=create_user_buttons(post.get("post_id"), admin=(user_id in ADMINS))
-            )
+                bot.send_message(
+                    user_id,
+                    text_full,
+                    reply_markup=create_user_buttons(post['post_id'], admin=(user_id in ADMINS))
+                )
+
         except Exception as e:
             print(f"Ошибка при пересылке поста: {e}")
 
@@ -515,31 +566,67 @@ def check_users(message):
             users.remove(user_id)
     bot.send_message(message.chat.id, f"✅ Перевірка завершена.\nВидалено неактивних: {len(inactive)}\nЗараз активних: {len(users)}")
 
-# === Функция генерации HTML ===
+def fmt_price(val):
+    """Форматирование цены (разделители тысяч, символ $)."""
+    if not val or val == "—":
+        return "—"
+    try:
+        n = float(str(val).replace("$", "").replace(" ", ""))
+        return f"{n:,.0f}$".replace(",", " ")
+    except:
+        return str(val)
+
+
+# === Функция генерации HTML страницы машины ===
 def generate_car_page(post, images_path="images", template_path="site/templatecar/template.html", output_folder="site/carsfolder"):
-    import re
+    import re, os
 
     # Читаем шаблон
     with open(template_path, "r", encoding="utf-8") as f:
         template = f.read()
-
-    # Генерируем данные
+    
+    # Имя файла
     filename = re.sub(r'\W+', '', post["title"].lower()) + ".html"
     filepath = os.path.join(output_folder, filename)
 
+    # Фото
     main_photo = f"../{images_path}/{post['media'][0]}" if post["media"] else ""
     gallery_html = "\n".join(
         [f'<img src="../{images_path}/{img}" alt="car image">' for img in post["media"]]
     )
-
-    # Подставляем в шаблон
-    html_content = (
-        template.replace("{{title}}", post["title"])
-                .replace("{{description}}", post["caption"])
-                .replace("{{features}}", post["characteristics"])
-                .replace("{{main_photo}}", main_photo)
-                .replace("{{gallery}}", gallery_html)
+    
+    # Описание
+    description_html = "".join(
+        f"<p>{line.strip()}</p>" for line in post["caption"].split("\n") if line.strip()
     )
+
+    # Характеристики
+    features_html = "".join(
+        f"<p>{line.strip()}</p>" for line in post["characteristics"].split("\n") if line.strip()
+    )
+
+    # Цена
+    price = fmt_price(post.get("price", "—"))
+
+    # Подставляем данные в шаблон
+    from pathlib import Path
+
+    posts = load_posts()
+    other_html = build_other_cars(post, posts)
+
+    html_content = (
+    template.replace("{{title}}", post["title"])
+            .replace("{{price}}", fmt_price(post.get("price", "—")))
+            .replace("{{year}}", str(post.get("year") or "—"))
+            .replace("{{mileage}}", str(post.get("mileage") or "—"))
+            .replace("{{description}}", description_html)
+            .replace("{{features}}", features_html)
+            .replace("{{main_photo}}", main_photo)
+            .replace("{{gallery}}", gallery_html)
+            .replace("{{other_cars}}", other_html)
+)
+
+
 
     # Создаём папку если её нет
     os.makedirs(output_folder, exist_ok=True)
@@ -551,20 +638,31 @@ def generate_car_page(post, images_path="images", template_path="site/templateca
     print(f"[INFO] Страница создана: {filepath}")
     return filepath
 
+
+# === Добавление карточки в каталог ===
 def add_to_catalog(post, katalog_path="site/katalogtemp/katalog.html"):
+    import re, os
+
     # читаем html каталога
     with open(katalog_path, "r", encoding="utf-8") as f:
         katalog_html = f.read()
 
-    import re
     filename = re.sub(r'\W+', '', post["title"].lower()) + ".html"
+    short_caption = (post['caption'][:30] + "...") if len(post['caption']) > 30 else post['caption']
+    price = fmt_price(post.get("price", "—"))
 
     # карточка по шаблону каталога
     card_html = f"""
     <a href="../carsfolder/{filename}" class="card">
         <img src="../images/{post['media'][0]}" alt="{post['title']}">
         <h2>{post['title']}</h2>
-        <p>{post['caption']}</p>
+        <div class="card-info">
+        <p class="price">💰 {price}</p>
+        <p>📅 {post.get('year', '—')}</p>
+        <p>🚗 {post.get('mileage', '—')} км</p>
+        </div>
+        <div class="ops">{short_caption}</div>
+
     </a>
     """
 
@@ -582,6 +680,27 @@ def add_to_catalog(post, katalog_path="site/katalogtemp/katalog.html"):
         f.write(katalog_html)
 
     print(f"[INFO] Добавлена карточка в каталог: {post['title']}")
+
+def build_other_cars(current_post, all_posts, images_path="images"):
+    # сортируем по дате (новые первыми)
+    others = sorted(all_posts, key=lambda p: p["timestamp"], reverse=True)
+    # исключаем текущий пост
+    others = [p for p in others if p["post_id"] != current_post["post_id"]]
+    # берём до 5 штук
+    others = others[:5]
+
+    cards = []
+    for p in others:
+        filename = re.sub(r'\W+', '', p['title'].lower()) + ".html"
+        cards.append(f"""
+        <a href="../carsfolder/{filename}">
+          <img src="../{images_path}/{p['media'][0]}" alt="{p['title']}">
+          <p>{p['title']}</p>
+          <p class="price">💰 {fmt_price(p.get("price", "—"))}</p>
+        </a>
+        """)
+    return "\n".join(cards)
+
 
 # --- Запуск бота ---
 print("🤖 Бот запущен...")
